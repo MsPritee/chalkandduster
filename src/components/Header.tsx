@@ -43,11 +43,11 @@ export default function Header() {
               </Link>
             ))}
           </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          {/* <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <Link to="/subscribe" className="btn btn-primary">
               Subscribe Now
             </Link>
-          </div>
+          </div> */}
         </div>
       </nav>
 

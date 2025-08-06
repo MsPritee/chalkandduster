@@ -48,8 +48,21 @@ export default function Contact() {
                   <span className="font-semibold">Instagram</span>
                 </a>
 
+                 {/* YouTube */}
+                 <a
+                  href="https://www.youtube.com/@codewithpritee"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center p-3 gap-4 text-gray-600 hover:text-red-600 transition-all"
+                >
+                  <div className="p-3 bg-red-100 rounded-lg">
+                    <Youtube className="h-6 w-6 text-red-600" />
+                  </div>
+                  <span className="font-semibold">YouTube</span>
+                </a>
+
                 {/* Twitter */}
-                <a
+                {/* <a
                   href="https://twitter.com/your-twitter-handle"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -59,7 +72,7 @@ export default function Contact() {
                     <Twitter className="h-6 w-6 text-blue-500" />
                   </div>
                   <span className="font-semibold">Twitter</span>
-                </a>
+                </a> */}
               </div>
             </div>
           </div>

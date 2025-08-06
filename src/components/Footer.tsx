@@ -33,10 +33,15 @@ function Footer() {
                   rel="noopener noreferrer"  
                   className="text-gray-400 hover:text-white"
                   >YouTube</a>
-                  <a href="https://www.instagram.com/chalkandduster_kbb?igsh=M2FvcG54am5lOGlk" 
+                  <a href="https://www.youtube.com/@codewithpritee" 
+                  target="_blank" 
+                  rel="noopener noreferrer"  
+                  className="text-gray-400 hover:text-white"
+                  >YouTube</a>
+                  {/* <a href="https://www.instagram.com/chalkandduster_kbb?igsh=M2FvcG54am5lOGlk" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white">Twitter</a>
+                  className="text-gray-400 hover:text-white">Twitter</a> */}
                   <a href="https://www.instagram.com/chalkandduster_kbb?igsh=M2FvcG54am5lOGlk" 
                   target="_blank" 
                   rel="noopener noreferrer" 

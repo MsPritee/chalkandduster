@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Send } from 'lucide-react';
-import { db } from "../firebase";
+import { db } from "../firebase.ts";
 import { collection, addDoc } from "firebase/firestore";
 
 export default function ContactForm() {
@@ -22,8 +22,8 @@ export default function ContactForm() {
     console.log('Form submitted:', formData);
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (error: any) => {
+    setFormData({ ...formData, [error.target.name]: error.target.value });
   };
 
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

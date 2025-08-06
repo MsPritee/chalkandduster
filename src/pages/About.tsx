@@ -1,9 +1,9 @@
 import React from 'react';
 import { Users, Target, History } from 'lucide-react';
 import kbb from '../Assets/Images/kbb.jpg';
-import pbb from '../Assets/Images/pbb1.jpg'
-import Sachin from '../Assets/Images/sachin.png'
-import MemberCard from '../components/memberCard';
+import pbb from '../Assets/Images/pbb1.jpg';
+import Sachin from '../Assets/Images/sachin.png';
+import MemberCard from '../components/MemberCard';
 
 
 
