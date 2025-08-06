@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import logo from '../Assets/Images/logo.png';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -19,7 +20,7 @@ export default function Header() {
         <div className="flex items-center justify-between py-4">
           <div className="flex lg:flex-1">
             <Link to="/" className="-m-1.5 p-1.5 flex items-center space-x-2">
-              <BookOpen className="h-8 w-8 text-indigo-600" />
+              <img src={logo} alt="Chalk and Duster Logo" className="h-8 w-8" />
               <span className="font-bold text-xl text-gray-900">Chalk and Duster</span>
             </Link>
           </div>
@@ -57,7 +58,7 @@ export default function Header() {
         <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <Link to="/" className="-m-1.5 p-1.5 flex items-center space-x-2">
-              <BookOpen className="h-8 w-8 text-indigo-600" />
+              <img src={logo} alt="Chalk and Duster Logo" className="h-8 w-8" />
               <span className="font-bold text-xl text-gray-900">Chalk and Duster</span>
             </Link>
             <button

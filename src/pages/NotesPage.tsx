@@ -16,7 +16,7 @@ export default function NotesPage() {
     <div className="py-16">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold mb-4">Mathematics Notes</h1>
+          <h1 className="text-4xl font-bold mb-4">Notes</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Comprehensive study materials organized by topic. Select a category to get started.
           </p>
