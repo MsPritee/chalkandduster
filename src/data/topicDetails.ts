@@ -164,9 +164,9 @@ while 1:
     now = datetime.datetime.now()
     hour = now.hour
     minute = now.minute
-    h1 = hour/10
+    h1 = hour//10
     h2 = hour % 10
-    m1 = minute /10
+    m1 = minute //10
     m2 = minute % 10
     print (h1,h2,m1,m2)
     delay_time = 0.001 #delay to create virtual effect
@@ -329,8 +329,76 @@ loop_display_time()
         key: "practical-4",
         title: "Controlling LEDs",
         description: "Control multiple LEDs using Raspberry Pi GPIO pins.",
-        code: `# Sample code for practical 3\n# ...`,
-        extra: "Instructions for practical 3."
+        table: [
+            
+          
+            ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
+            ["1", "GPIO 2",  "PIN 3",  "D0"],
+            ["2", "GPIO 3",  "PIN 5",  "D1"],
+            ["3", "GPIO 4",  "PIN 7",  "D2"],
+            ["4", "GPIO 17", "PIN 11", "D3"],
+            ["5", "GPIO 27", "PIN 13", "D4"],
+            ["6", "GPIO 22", "PIN 15", "D5"],
+            ["7", "GPIO 10", "PIN 19", "D6"],
+            ["8", "GPIO 9",  "PIN 21", "D7"]
+      
+                 
+          
+        ],
+        code: `import RPi.GPIO as GPIO
+import time
+
+# Define GPIO pins connected to D0–D7
+led_pins = [2, 3, 4, 17, 27, 22, 10, 9]
+
+GPIO.setmode(GPIO.BCM)
+
+# Setup all pins as output
+for pin in led_pins:
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, GPIO.LOW)
+
+# Basic patterns
+def all_on():
+    for pin in led_pins:
+        GPIO.output(pin, GPIO.HIGH)
+
+def all_off():
+    for pin in led_pins:
+        GPIO.output(pin, GPIO.LOW)
+
+def blink_all(times=3, delay=0.5):
+    for _ in range(times):
+        all_on()
+        time.sleep(delay)
+        all_off()
+        time.sleep(delay)
+
+def chasing(delay=0.1):
+    for pin in led_pins:
+        GPIO.output(pin, GPIO.HIGH)
+        time.sleep(delay)
+        GPIO.output(pin, GPIO.LOW)
+
+def ping_pong(delay=0.1):
+    for pin in led_pins + led_pins[::-1]:
+        GPIO.output(pin, GPIO.HIGH)
+        time.sleep(delay)
+        GPIO.output(pin, GPIO.LOW)
+
+# Run test patterns
+try:
+    while True:
+        blink_all()
+        chasing()
+        ping_pong()
+except KeyboardInterrupt:
+    print("Exiting...")
+finally:
+    all_off()
+    GPIO.cleanup()
+`,
+        extra: "Author: Pritee"
       }
     ]
   },
