@@ -1,99 +1,99 @@
 import { FunctionSquare as Functions, Calculator, PieChart } from "lucide-react";
 
 const topicDetails = {
-  "linear-equations": {
-    title: "Linear Equations",
-    category: "Algebra",
-    description: "Learn how to solve linear equations and apply them to real-world problems.",
-    icon: Functions,
-    content: "Linear equations are equations of the form Ax + B = 0..."
-  },
-  "quadratic-functions": {
-    title: "Quadratic Functions",
-    category: "Algebra",
-    description: "Understand quadratic equations, their graphs, and solutions.",
-    icon: Functions,
-    content: "A quadratic function is a function that can be described by an equation of the form ax^2 + bx + c = 0..."
-  },
-  "polynomials": {
-    title: "Polynomials",
-    category: "Algebra",
-    description: "Explore polynomial functions, their properties, and factorization techniques.",
-    icon: Calculator,
-    content: "A polynomial is a mathematical expression consisting of variables and coefficients..."
-  },
-  "limits": {
-    title: "Limits",
-    category: "Calculus",
-    description: "Grasp the concept of limits in calculus and their applications.",
-    icon: Functions,
-    content: "Limits describe the behavior of a function as it approaches a certain value..."
-  },
-  "derivatives": {
-    title: "Derivatives",
-    category: "Calculus",
-    description: "Master differentiation and its applications in calculus.",
-    icon: Calculator,
-    content: "The derivative measures how a function changes as its input changes..."
-  },
-  "integrals": {
-    title: "Integrals",
-    category: "Calculus",
-    description: "Learn about integrals and their significance in calculus.",
-    icon: Functions,
-    content: "An integral represents the area under a curve and is a key concept in calculus..."
-  },
-  "probability": {
-    title: "Probability",
-    category: "Statistics",
-    description: "Study probability theories and their real-world applications.",
-    icon: PieChart,
-    content: "Probability is the measure of the likelihood of an event occurring..."
-  },
-  "data-analysis": {
-    title: "Data Analysis",
-    category: "Statistics",
-    description: "Understand data analysis techniques and statistical methods.",
-    icon: PieChart,
-    content: "Data analysis involves inspecting, cleaning, transforming, and modeling data..."
-  },
-  "regression": {
-    title: "Regression",
-    category: "Statistics",
-    description: "Learn about regression models and their role in statistics.",
-    icon: Calculator,
-    content: "Regression analysis helps predict the relationship between variables..."
-  },
-  "Internet-of-Things": {
-    title: "Internet of Things",
-    category: "Technology",
-    description: "Understand the concept of IoT, how devices communicate, and its real-world applications.",
-    icon: Functions,
-    content: "The Internet of Things (IoT) refers to a network of interconnected physical devices that can collect and exchange data using embedded sensors and software. Examples include smart homes, wearable devices, and industrial automation systems. IoT enables better monitoring, data-driven decision-making, and automation across industries.",
-    subtopics: [
-      {
-        key: "practical-1",
-        practical: "Practical 3",
-        title: "Displaying Time on 7-Segment",
-        description: "Learn how to display time using a 4-digit 7-segment display and Raspberry Pi.",
-        table: [
-            
-            ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "7-Segment name"],
-            ["1", "GPIO 26", "PIN 37", "Segment a"],
-            ["2", "GPIO 19", "PIN 35", "Segment b"],
-            ["3", "GPIO 13", "PIN 33", "Segment c"],
-            ["4", "GPIO 6",  "PIN 31", "Segment d"],
-            ["5", "GPIO 5",  "PIN 29", "Segment e"],
-            ["6", "GPIO 11", "PIN 23", "Segment f"],
-            ["7", "GPIO 9",  "PIN 21", "Segment g"],
-            ["8", "GPIO 10", "PIN 19", "Segment DP"],
-            ["9", "GPIO 7",  "PIN 26", "Digit 1"],
-            ["10", "GPIO 8", "PIN 24", "Digit 2"],
-            ["11", "GPIO 25", "PIN 22", "Digit 3"],
-            ["12", "GPIO 24", "PIN 18", "Digit 4"]            
-            
-          ],
-        code: `import RPi.GPIO as GPIO
+    "linear-equations": {
+        title: "Linear Equations",
+        category: "Algebra",
+        description: "Learn how to solve linear equations and apply them to real-world problems.",
+        icon: Functions,
+        content: "Linear equations are equations of the form Ax + B = 0..."
+    },
+    "quadratic-functions": {
+        title: "Quadratic Functions",
+        category: "Algebra",
+        description: "Understand quadratic equations, their graphs, and solutions.",
+        icon: Functions,
+        content: "A quadratic function is a function that can be described by an equation of the form ax^2 + bx + c = 0..."
+    },
+    "polynomials": {
+        title: "Polynomials",
+        category: "Algebra",
+        description: "Explore polynomial functions, their properties, and factorization techniques.",
+        icon: Calculator,
+        content: "A polynomial is a mathematical expression consisting of variables and coefficients..."
+    },
+    "limits": {
+        title: "Limits",
+        category: "Calculus",
+        description: "Grasp the concept of limits in calculus and their applications.",
+        icon: Functions,
+        content: "Limits describe the behavior of a function as it approaches a certain value..."
+    },
+    "derivatives": {
+        title: "Derivatives",
+        category: "Calculus",
+        description: "Master differentiation and its applications in calculus.",
+        icon: Calculator,
+        content: "The derivative measures how a function changes as its input changes..."
+    },
+    "integrals": {
+        title: "Integrals",
+        category: "Calculus",
+        description: "Learn about integrals and their significance in calculus.",
+        icon: Functions,
+        content: "An integral represents the area under a curve and is a key concept in calculus..."
+    },
+    "probability": {
+        title: "Probability",
+        category: "Statistics",
+        description: "Study probability theories and their real-world applications.",
+        icon: PieChart,
+        content: "Probability is the measure of the likelihood of an event occurring..."
+    },
+    "data-analysis": {
+        title: "Data Analysis",
+        category: "Statistics",
+        description: "Understand data analysis techniques and statistical methods.",
+        icon: PieChart,
+        content: "Data analysis involves inspecting, cleaning, transforming, and modeling data..."
+    },
+    "regression": {
+        title: "Regression",
+        category: "Statistics",
+        description: "Learn about regression models and their role in statistics.",
+        icon: Calculator,
+        content: "Regression analysis helps predict the relationship between variables..."
+    },
+    "Internet-of-Things": {
+        title: "Internet of Things",
+        category: "Technology",
+        description: "Understand the concept of IoT, how devices communicate, and its real-world applications.",
+        icon: Functions,
+        content: "The Internet of Things (IoT) refers to a network of interconnected physical devices that can collect and exchange data using embedded sensors and software. Examples include smart homes, wearable devices, and industrial automation systems. IoT enables better monitoring, data-driven decision-making, and automation across industries.",
+        subtopics: [
+            {
+                key: "practical-1",
+                practical: "Practical 3",
+                title: "Displaying Time on 7-Segment",
+                description: "Learn how to display time using a 4-digit 7-segment display and Raspberry Pi.",
+                table: [
+
+                    ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "7-Segment name"],
+                    ["1", "GPIO 26", "PIN 37", "Segment a"],
+                    ["2", "GPIO 19", "PIN 35", "Segment b"],
+                    ["3", "GPIO 13", "PIN 33", "Segment c"],
+                    ["4", "GPIO 6", "PIN 31", "Segment d"],
+                    ["5", "GPIO 5", "PIN 29", "Segment e"],
+                    ["6", "GPIO 11", "PIN 23", "Segment f"],
+                    ["7", "GPIO 9", "PIN 21", "Segment g"],
+                    ["8", "GPIO 10", "PIN 19", "Segment DP/DEC"],
+                    ["9", "GPIO 7", "PIN 26", "Digit 3 (Leftmost/3)"],
+                    ["10", "GPIO 8", "PIN 24", "Digit 2 (2)"],
+                    ["11", "GPIO 25", "PIN 22", "Digit 1 (1)"],
+                    ["12", "GPIO 24", "PIN 18", "Digit 0 (Rightmost/0)"]
+
+                ],
+                code: `import RPi.GPIO as GPIO
 import time, datetime
 now = datetime.datetime.now()
 GPIO.setmode(GPIO.BCM)
@@ -189,13 +189,13 @@ while 1:
     time.sleep(delay_time)
     GPIO.output(24, 0) #Turn off Digit One
     #time.sleep(1)`,
-        extra: "Author: Pritee"
-      },
-      {
-        key: "practical-2",
-        title: "Check the 7-segment display",
-        description: "Check and display numbers on the 7-segment display.",
-        code: `import RPi.GPIO as GPIO
+                extra: "Author: Pritee"
+            },
+            {
+                key: "practical-2",
+                title: "Check the 7-segment display",
+                description: "Check and display numbers on the 7-segment display.",
+                code: `import RPi.GPIO as GPIO
 import time
 
 # Segment pins: A, B, C, D, E, F, G, DP
@@ -243,13 +243,13 @@ for digit in digits:
 GPIO.cleanup()
 print("Test completed.")
 `,
-        extra: "Instructions for practical 3."
-      },
-      {
-        key: "practical-3",
-        title: "7 segment display",
-        description: "Display it on the 7-segment display.",
-        code: `import RPi.GPIO as GPIO
+                extra: "Instructions for practical 3."
+            },
+            {
+                key: "practical-3",
+                title: "7 segment display",
+                description: "Display it on the 7-segment display.",
+                code: `import RPi.GPIO as GPIO
 import time
 from datetime import datetime
 
@@ -323,29 +323,29 @@ def loop_display_time():
 
 loop_display_time()
 `,
-        extra: "Instructions for practical 3."
-      },
-      {
-        key: "practical-4",
-        title: "Controlling LEDs",
-        description: "Control multiple LEDs using Raspberry Pi GPIO pins.",
-        table: [
-            
-          
-            ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
-            ["1", "GPIO 2",  "PIN 3",  "D0"],
-            ["2", "GPIO 3",  "PIN 5",  "D1"],
-            ["3", "GPIO 4",  "PIN 7",  "D2"],
-            ["4", "GPIO 17", "PIN 11", "D3"],
-            ["5", "GPIO 27", "PIN 13", "D4"],
-            ["6", "GPIO 22", "PIN 15", "D5"],
-            ["7", "GPIO 10", "PIN 19", "D6"],
-            ["8", "GPIO 9",  "PIN 21", "D7"]
-      
-                 
-          
-        ],
-        code: `import RPi.GPIO as GPIO
+                extra: "Instructions for practical 3."
+            },
+            {
+                key: "practical-4",
+                title: "Controlling LEDs",
+                description: "Control multiple LEDs using Raspberry Pi GPIO pins.",
+                table: [
+
+
+                    ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
+                    ["1", "GPIO 2", "PIN 3", "D0"],
+                    ["2", "GPIO 3", "PIN 5", "D1"],
+                    ["3", "GPIO 4", "PIN 7", "D2"],
+                    ["4", "GPIO 17", "PIN 11", "D3"],
+                    ["5", "GPIO 27", "PIN 13", "D4"],
+                    ["6", "GPIO 22", "PIN 15", "D5"],
+                    ["7", "GPIO 10", "PIN 19", "D6"],
+                    ["8", "GPIO 9", "PIN 21", "D7"],
+                    ["9", "GND", "PIN 6", "GND"],
+
+
+                ],
+                code: `import RPi.GPIO as GPIO
 import time
 
 # Define GPIO pins connected to D0–D7
@@ -398,17 +398,221 @@ finally:
     all_off()
     GPIO.cleanup()
 `,
-        extra: "Author: Pritee"
-      }
-    ]
-  },
-  "Artificial-Intelligence": {
-    title: "Artificial Intelligence",
-    category: "Technology",
-    description: "Learn about AI, machine learning, and deep learning, and their applications.",
-    icon: Functions,
-    content: "Artificial Intelligence (AI) refers to the ability of machines to perform tasks that typically require human intelligence, such as visual perception, speech recognition, decision-making, and language understanding. Machine learning and deep learning are subfields of AI that focus on building models that can learn from data and make predictions or decisions."
-  }
+                extra: "Author: Pritee"
+            },
+
+      {
+                key: "practical-5",
+                title: "Controll LEDs with WA",
+                description: "Control multiple LEDs using WhatsApp.",
+                table: [
+
+                    ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
+                    ["1", "GPIO 2", "PIN 3", "D0"],
+                    ["2", "GPIO 3", "PIN 5", "D1"],
+                    ["3", "GPIO 4", "PIN 7", "D2"],
+                    ["4", "GPIO 17", "PIN 11", "D3"],
+                    ["5", "GPIO 27", "PIN 13", "D4"],
+                    ["6", "GPIO 22", "PIN 15", "D5"],
+                    ["7", "GPIO 10", "PIN 19", "D6"],
+                    ["8", "GPIO 9", "PIN 21", "D7"],
+                    ["9", "GND", "PIN 6", "GND"],
+
+                ],
+                code: `
+from flask import Flask, request
+from twilio.twiml.messaging_response import MessagingResponse
+import RPi.GPIO as GPIO
+
+# Update with your 8 GPIO pins
+LED_PINS = {
+    "led1": 2,
+    "led2": 3,
+    "led3": 4,
+    "led4": 17,
+    "led5": 27,
+    "led6": 22,
+    "led7": 10,
+    "led8": 9
+}
+
+# Setup GPIO
+GPIO.setmode(GPIO.BCM)
+for pin in LED_PINS.values():
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, GPIO.LOW)
+
+app = Flask(__name__)
+
+@app.route("/whatsapp", methods=["POST"])
+def whatsapp():
+    msg = request.form.get('Body').lower().strip()
+    response = MessagingResponse()
+    
+    if "on" in msg or "off" in msg:
+        found = False
+        for led, pin in LED_PINS.items():
+            if led in msg:
+                state = GPIO.HIGH if "on" in msg else GPIO.LOW
+                GPIO.output(pin, state)
+                response.message(f"{led.upper()} turned {'ON' if state else 'OFF'}")
+                found = True
+                break
+        if not found:
+            if "all on" in msg:
+                for pin in LED_PINS.values():
+                    GPIO.output(pin, GPIO.HIGH)
+                response.message("All LEDs turned ON")
+            elif "all off" in msg:
+                for pin in LED_PINS.values():
+                    GPIO.output(pin, GPIO.LOW)
+                response.message("All LEDs turned OFF")
+            else:
+                response.message("Invalid LED command.")
+    else:
+        response.message("Try: led1 on, led3 off, all on, all off")
+
+    return str(response)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
+`,
+                extra: "Author: Pritee"
+            },
+
+      {
+                key: "practical-6",
+                title: "Blink LEDs using WA msg",
+                description: "Control multiple LEDs using Raspberry Pi GPIO pins.",
+                table: [
+
+                    ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
+                    ["1", "GPIO 2", "PIN 3", "D0"],
+                    ["2", "GPIO 3", "PIN 5", "D1"],
+                    ["3", "GPIO 4", "PIN 7", "D2"],
+                    ["4", "GPIO 17", "PIN 11", "D3"],
+                    ["5", "GPIO 27", "PIN 13", "D4"],
+                    ["6", "GPIO 22", "PIN 15", "D5"],
+                    ["7", "GPIO 10", "PIN 19", "D6"],
+                    ["8", "GPIO 9", "PIN 21", "D7"],
+                    ["9", "GND", "PIN 6", "GND"],
+
+                ],
+                code: `from flask import Flask, request
+from twilio.twiml.messaging_response import MessagingResponse
+import RPi.GPIO as GPIO
+import threading
+import time
+
+# Define GPIO pins for each LED
+LED_PINS = {
+    "led1": 2,
+    "led2": 3,
+    "led3": 4,
+    "led4": 17,
+    "led5": 27,
+    "led6": 22,
+    "led7": 10,
+    "led8": 9
+}
+
+# Setup GPIO
+GPIO.setmode(GPIO.BCM)
+for pin in LED_PINS.values():
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, GPIO.LOW)
+
+# Dictionary to keep track of blinking threads
+blinking_threads = {}
+
+# Function to blink an LED
+def blink_led(pin, stop_event, interval=0.5):
+    while not stop_event.is_set():
+        GPIO.output(pin, GPIO.HIGH)
+        time.sleep(interval)
+        GPIO.output(pin, GPIO.LOW)
+        time.sleep(interval)
+
+app = Flask(__name__)
+
+@app.route("/whatsapp", methods=["POST"])
+def whatsapp():
+    msg = request.form.get('Body').lower().strip()
+    response = MessagingResponse()
+    
+    # Handle ON/OFF commands
+    if "on" in msg or "off" in msg:
+        for led, pin in LED_PINS.items():
+            if led in msg:
+                # If LED was blinking, stop it before setting state
+                if led in blinking_threads:
+                    blinking_threads[led]['stop'].set()
+                    blinking_threads[led]['thread'].join()
+                    del blinking_threads[led]
+
+                state = GPIO.HIGH if "on" in msg else GPIO.LOW
+                GPIO.output(pin, state)
+                response.message(f"{led.upper()} turned {'ON' if state else 'OFF'}")
+                break
+        else:
+            if "all on" in msg:
+                for led, pin in LED_PINS.items():
+                    if led in blinking_threads:
+                        blinking_threads[led]['stop'].set()
+                        blinking_threads[led]['thread'].join()
+                        del blinking_threads[led]
+                    GPIO.output(pin, GPIO.HIGH)
+                response.message("All LEDs turned ON")
+            elif "all off" in msg:
+                for led, pin in LED_PINS.items():
+                    if led in blinking_threads:
+                        blinking_threads[led]['stop'].set()
+                        blinking_threads[led]['thread'].join()
+                        del blinking_threads[led]
+                    GPIO.output(pin, GPIO.LOW)
+                response.message("All LEDs turned OFF")
+            else:
+                response.message("Invalid LED command.")
+
+    # Handle BLINK command
+    elif "blink" in msg:
+        for led, pin in LED_PINS.items():
+            if led in msg:
+                # If already blinking, restart
+                if led in blinking_threads:
+                    blinking_threads[led]['stop'].set()
+                    blinking_threads[led]['thread'].join()
+
+                stop_event = threading.Event()
+                t = threading.Thread(target=blink_led, args=(pin, stop_event))
+                t.start()
+                blinking_threads[led] = {'thread': t, 'stop': stop_event}
+                response.message(f"{led.upper()} is now blinking")
+                break
+        else:
+            response.message("Invalid blink command. Try led3 blink")
+
+    else:
+        response.message("Send: led1 on, led2 off, all on, led3 blink, etc.")
+
+    return str(response)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
+`,
+                extra: "Author: Pritee"
+            }
+        ]
+    },
+    "Artificial-Intelligence": {
+        title: "Artificial Intelligence",
+        category: "Technology",
+        description: "Learn about AI, machine learning, and deep learning, and their applications.",
+        icon: Functions,
+        content: "Artificial Intelligence (AI) refers to the ability of machines to perform tasks that typically require human intelligence, such as visual perception, speech recognition, decision-making, and language understanding. Machine learning and deep learning are subfields of AI that focus on building models that can learn from data and make predictions or decisions."
+    }
 };
 
 export default topicDetails;

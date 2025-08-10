@@ -8,6 +8,7 @@ import Contact from './pages/Contact';
 import Subscribe from './pages/Subscribe';
 import NotesPage from './pages/NotesPage';
 import TopicPage from './pages/TopicPage';
+import Quiz from './pages/Quiz';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/notes" element={<NotesPage />} />
             <Route path="/notes/:topic" element={<TopicPage />} />
+            <Route path="/quiz" element={<Quiz />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/subscribe" element={<Subscribe />} />
           </Routes>

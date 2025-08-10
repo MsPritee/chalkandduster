@@ -8,6 +8,7 @@ const navigation = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Notes', href: '/notes' },
+  { name: 'Quiz', href: '/quiz' },
   { name: 'Contact', href: '/contact' },
 ];
 
@@ -83,7 +84,7 @@ export default function Header() {
                   </Link>
                 ))}
               </div>
-              <div className="py-6">
+              {/* <div className="py-6">
                 <Link
                   to="/subscribe"
                   className="btn btn-primary w-full text-center"
@@ -91,7 +92,7 @@ export default function Header() {
                 >
                   Subscribe Now
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

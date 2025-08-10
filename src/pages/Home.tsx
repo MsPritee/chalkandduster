@@ -1,6 +1,8 @@
 import Hero from '../components/Hero';
 import ContactForm from '../components/ContactForm';
 import VideoCard from "../components/VideoCard";
+import { Link } from 'react-router-dom';
+import { Brain, Clock, CheckCircle } from 'lucide-react';
 
 export default function Home() {
 
@@ -103,6 +105,52 @@ export default function Home() {
     <>
       <Hero />
       
+      {/* Quiz Section */}
+      <section className="py-16 bg-indigo-50">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Test Your Knowledge</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Challenge yourself with our interactive quizzes on various topics. 
+              Each quiz contains 10 random questions with a 10-minute time limit.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div className="text-center">
+              <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <Brain className="h-8 w-8 text-indigo-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Multiple Topics</h3>
+              <p className="text-gray-600">Choose from Python, Mathematics, Web Development, AI, and more</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <Clock className="h-8 w-8 text-indigo-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Timed Challenges</h3>
+              <p className="text-gray-600">10-minute timer to test your speed and accuracy</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <CheckCircle className="h-8 w-8 text-indigo-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Instant Results</h3>
+              <p className="text-gray-600">Get immediate feedback and detailed explanations</p>
+            </div>
+          </div>
+          
+          <div className="text-center">
+            <Link
+              to="/quiz"
+              className="inline-flex items-center px-8 py-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors shadow-lg"
+            >
+              Start Quiz Now
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Latest Videos Section */}
       <section id="latest-videos" className="py-16">
         <div className="container-custom">
