@@ -73,8 +73,92 @@ const topicDetails = {
         subtopics: [
             {
                 key: "practical-1",
-                practical: "Practical 3",
-                title: "Displaying Time on 7-Segment",
+                title: "P1: Basic Setup",
+                description: "Starting Raspbian OS, Familiarising with Raspberry Pi",
+                pdfUrl: "https://drive.google.com/file/d/1KcDzZ34v8ODWt2fJcWbT8rdoKsvlAA-U/view?usp=sharing",
+                extra: "Instructions for practical 1."
+            },
+            {
+                key: "practical-2",
+                title: "P2: Controlling LEDs",
+                description: "Control multiple LEDs using Raspberry Pi GPIO pins.",
+                pdfUrl: "https://drive.google.com/file/d/1eFCWgNZ61CONvCYLy2x3nxwM4LJDAOsF/view?usp=sharing",
+                table: [
+
+
+                    ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
+                    ["1", "GPIO 2", "PIN 3", "D0"],
+                    ["2", "GPIO 3", "PIN 5", "D1"],
+                    ["3", "GPIO 4", "PIN 7", "D2"],
+                    ["4", "GPIO 17", "PIN 11", "D3"],
+                    ["5", "GPIO 27", "PIN 13", "D4"],
+                    ["6", "GPIO 22", "PIN 15", "D5"],
+                    ["7", "GPIO 10", "PIN 19", "D6"],
+                    ["8", "GPIO 9", "PIN 21", "D7"],
+                    ["9", "GND", "PIN 6", "GND"],
+
+
+                ],
+                code: `import RPi.GPIO as GPIO
+import time
+
+# Define GPIO pins connected to D0–D7
+led_pins = [2, 3, 4, 17, 27, 22, 10, 9]
+
+GPIO.setmode(GPIO.BCM)
+
+# Setup all pins as output
+for pin in led_pins:
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, GPIO.LOW)
+
+# Basic patterns
+def all_on():
+    for pin in led_pins:
+        GPIO.output(pin, GPIO.HIGH)
+
+def all_off():
+    for pin in led_pins:
+        GPIO.output(pin, GPIO.LOW)
+
+def blink_all(times=3, delay=0.5):
+    for _ in range(times):
+        all_on()
+        time.sleep(delay)
+        all_off()
+        time.sleep(delay)
+
+def chasing(delay=0.1):
+    for pin in led_pins:
+        GPIO.output(pin, GPIO.HIGH)
+        time.sleep(delay)
+        GPIO.output(pin, GPIO.LOW)
+
+def ping_pong(delay=0.1):
+    for pin in led_pins + led_pins[::-1]:
+        GPIO.output(pin, GPIO.HIGH)
+        time.sleep(delay)
+        GPIO.output(pin, GPIO.LOW)
+
+# Run test patterns
+try:
+    while True:
+        blink_all()
+        chasing()
+        ping_pong()
+except KeyboardInterrupt:
+    print("Exiting...")
+finally:
+    all_off()
+    GPIO.cleanup()
+`,
+                extra: "Author: Pritee"
+            },
+
+            {
+                key: "practical-3",
+                // practical: "Practical 3",
+                title: "P3: Displaying Time on 7-Segment",
                 description: "Learn how to display time using a 4-digit 7-segment display and Raspberry Pi.",
                 table: [
 
@@ -93,6 +177,7 @@ const topicDetails = {
                     ["12", "GPIO 24", "PIN 18", "Digit 0 (Rightmost/0)"]
 
                 ],
+                pdfUrl: "https://drive.google.com/file/d/16h8s-ztFHstI7llI9z2kxuPLicMUnCj4/view?usp=drive_link",
                 code: `import RPi.GPIO as GPIO
 import time, datetime
 now = datetime.datetime.now()
@@ -192,9 +277,94 @@ while 1:
                 extra: "Author: Pritee"
             },
             {
-                key: "practical-2",
+                key: "practical-4",
+                title: "P4: Controll LEDs with WA",
+                description: "Control multiple LEDs using WhatsApp.",
+                table: [
+
+                    ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
+                    ["1", "GPIO 2", "PIN 3", "D0"],
+                    ["2", "GPIO 3", "PIN 5", "D1"],
+                    ["3", "GPIO 4", "PIN 7", "D2"],
+                    ["4", "GPIO 17", "PIN 11", "D3"],
+                    ["5", "GPIO 27", "PIN 13", "D4"],
+                    ["6", "GPIO 22", "PIN 15", "D5"],
+                    ["7", "GPIO 10", "PIN 19", "D6"],
+                    ["8", "GPIO 9", "PIN 21", "D7"],
+                    ["9", "GND", "PIN 6", "GND"],
+
+                ],
+                pdfUrl: "https://drive.google.com/file/d/1H0LY_4MB4dtgoF4ceBU803QYTZXz4hRY/view?usp=sharing",
+                code: `
+from flask import Flask, request
+from twilio.twiml.messaging_response import MessagingResponse
+import RPi.GPIO as GPIO
+
+# Update with your 8 GPIO pins
+LED_PINS = {
+    "led1": 2,
+    "led2": 3,
+    "led3": 4,
+    "led4": 17,
+    "led5": 27,
+    "led6": 22,
+    "led7": 10,
+    "led8": 9
+}
+
+# Setup GPIO
+GPIO.setmode(GPIO.BCM)
+for pin in LED_PINS.values():
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, GPIO.LOW)
+
+app = Flask(__name__)
+
+@app.route("/whatsapp", methods=["POST"])
+def whatsapp():
+    msg = request.form.get('Body').lower().strip()
+    response = MessagingResponse()
+    
+    if "on" in msg or "off" in msg:
+        found = False
+        for led, pin in LED_PINS.items():
+            if led in msg:
+                state = GPIO.HIGH if "on" in msg else GPIO.LOW
+                GPIO.output(pin, state)
+                response.message(f"{led.upper()} turned {'ON' if state else 'OFF'}")
+                found = True
+                break
+        if not found:
+            if "all on" in msg:
+                for pin in LED_PINS.values():
+                    GPIO.output(pin, GPIO.HIGH)
+                response.message("All LEDs turned ON")
+            elif "all off" in msg:
+                for pin in LED_PINS.values():
+                    GPIO.output(pin, GPIO.LOW)
+                response.message("All LEDs turned OFF")
+            else:
+                response.message("Invalid LED command.")
+    else:
+        response.message("Try: led1 on, led3 off, all on, all off")
+
+    return str(response)
+
+@app.route("/") 
+def home: 
+    return "Welcome to the LED control app." 
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
+`,
+                extra: "Author: Pritee"
+            },
+            {
+                key: "practical-11",
                 title: "Check the 7-segment display",
                 description: "Check and display numbers on the 7-segment display.",
+
                 code: `import RPi.GPIO as GPIO
 import time
 
@@ -246,10 +416,11 @@ print("Test completed.")
                 extra: "Instructions for practical 3."
             },
             {
-                key: "practical-3",
+                key: "practical-12",
                 title: "7 segment display",
                 description: "Display it on the 7-segment display.",
-                code: `import RPi.GPIO as GPIO
+                code: `
+import RPi.GPIO as GPIO
 import time
 from datetime import datetime
 
@@ -325,164 +496,12 @@ loop_display_time()
 `,
                 extra: "Instructions for practical 3."
             },
+
+
+
+
             {
-                key: "practical-4",
-                title: "Controlling LEDs",
-                description: "Control multiple LEDs using Raspberry Pi GPIO pins.",
-                table: [
-
-
-                    ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
-                    ["1", "GPIO 2", "PIN 3", "D0"],
-                    ["2", "GPIO 3", "PIN 5", "D1"],
-                    ["3", "GPIO 4", "PIN 7", "D2"],
-                    ["4", "GPIO 17", "PIN 11", "D3"],
-                    ["5", "GPIO 27", "PIN 13", "D4"],
-                    ["6", "GPIO 22", "PIN 15", "D5"],
-                    ["7", "GPIO 10", "PIN 19", "D6"],
-                    ["8", "GPIO 9", "PIN 21", "D7"],
-                    ["9", "GND", "PIN 6", "GND"],
-
-
-                ],
-                code: `import RPi.GPIO as GPIO
-import time
-
-# Define GPIO pins connected to D0–D7
-led_pins = [2, 3, 4, 17, 27, 22, 10, 9]
-
-GPIO.setmode(GPIO.BCM)
-
-# Setup all pins as output
-for pin in led_pins:
-    GPIO.setup(pin, GPIO.OUT)
-    GPIO.output(pin, GPIO.LOW)
-
-# Basic patterns
-def all_on():
-    for pin in led_pins:
-        GPIO.output(pin, GPIO.HIGH)
-
-def all_off():
-    for pin in led_pins:
-        GPIO.output(pin, GPIO.LOW)
-
-def blink_all(times=3, delay=0.5):
-    for _ in range(times):
-        all_on()
-        time.sleep(delay)
-        all_off()
-        time.sleep(delay)
-
-def chasing(delay=0.1):
-    for pin in led_pins:
-        GPIO.output(pin, GPIO.HIGH)
-        time.sleep(delay)
-        GPIO.output(pin, GPIO.LOW)
-
-def ping_pong(delay=0.1):
-    for pin in led_pins + led_pins[::-1]:
-        GPIO.output(pin, GPIO.HIGH)
-        time.sleep(delay)
-        GPIO.output(pin, GPIO.LOW)
-
-# Run test patterns
-try:
-    while True:
-        blink_all()
-        chasing()
-        ping_pong()
-except KeyboardInterrupt:
-    print("Exiting...")
-finally:
-    all_off()
-    GPIO.cleanup()
-`,
-                extra: "Author: Pritee"
-            },
-
-      {
-                key: "practical-5",
-                title: "Controll LEDs with WA",
-                description: "Control multiple LEDs using WhatsApp.",
-                table: [
-
-                    ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
-                    ["1", "GPIO 2", "PIN 3", "D0"],
-                    ["2", "GPIO 3", "PIN 5", "D1"],
-                    ["3", "GPIO 4", "PIN 7", "D2"],
-                    ["4", "GPIO 17", "PIN 11", "D3"],
-                    ["5", "GPIO 27", "PIN 13", "D4"],
-                    ["6", "GPIO 22", "PIN 15", "D5"],
-                    ["7", "GPIO 10", "PIN 19", "D6"],
-                    ["8", "GPIO 9", "PIN 21", "D7"],
-                    ["9", "GND", "PIN 6", "GND"],
-
-                ],
-                code: `
-from flask import Flask, request
-from twilio.twiml.messaging_response import MessagingResponse
-import RPi.GPIO as GPIO
-
-# Update with your 8 GPIO pins
-LED_PINS = {
-    "led1": 2,
-    "led2": 3,
-    "led3": 4,
-    "led4": 17,
-    "led5": 27,
-    "led6": 22,
-    "led7": 10,
-    "led8": 9
-}
-
-# Setup GPIO
-GPIO.setmode(GPIO.BCM)
-for pin in LED_PINS.values():
-    GPIO.setup(pin, GPIO.OUT)
-    GPIO.output(pin, GPIO.LOW)
-
-app = Flask(__name__)
-
-@app.route("/whatsapp", methods=["POST"])
-def whatsapp():
-    msg = request.form.get('Body').lower().strip()
-    response = MessagingResponse()
-    
-    if "on" in msg or "off" in msg:
-        found = False
-        for led, pin in LED_PINS.items():
-            if led in msg:
-                state = GPIO.HIGH if "on" in msg else GPIO.LOW
-                GPIO.output(pin, state)
-                response.message(f"{led.upper()} turned {'ON' if state else 'OFF'}")
-                found = True
-                break
-        if not found:
-            if "all on" in msg:
-                for pin in LED_PINS.values():
-                    GPIO.output(pin, GPIO.HIGH)
-                response.message("All LEDs turned ON")
-            elif "all off" in msg:
-                for pin in LED_PINS.values():
-                    GPIO.output(pin, GPIO.LOW)
-                response.message("All LEDs turned OFF")
-            else:
-                response.message("Invalid LED command.")
-    else:
-        response.message("Try: led1 on, led3 off, all on, all off")
-
-    return str(response)
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
-
-`,
-                extra: "Author: Pritee"
-            },
-
-      {
-                key: "practical-6",
+                key: "practical-13",
                 title: "Blink LEDs using WA msg",
                 description: "Control multiple LEDs using Raspberry Pi GPIO pins.",
                 table: [
@@ -499,7 +518,8 @@ if __name__ == "__main__":
                     ["9", "GND", "PIN 6", "GND"],
 
                 ],
-                code: `from flask import Flask, request
+                code: `
+from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 import RPi.GPIO as GPIO
 import threading
@@ -598,12 +618,19 @@ def whatsapp():
 
     return str(response)
 
+@app.route("/") 
+def home: 
+    return "Welcome to the LED control app." 
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
 
 `,
                 extra: "Author: Pritee"
-            }
+            },
+
+
         ]
     },
     "Artificial-Intelligence": {

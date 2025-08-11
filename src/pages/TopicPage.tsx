@@ -1,13 +1,25 @@
-import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import topicDetails from "../data/topicDetails";
 import CodeBlock from "../components/CodeBlock";
+import PdfViewer from "../components/PdfViewer";
 
 export default function TopicPage() {
   const { topic } = useParams();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const topicData = topicDetails[topic as keyof typeof topicDetails];
-  const [selectedSub, setSelectedSub] = useState<string | null>(null);
+  const initialSub = searchParams.get("sub");
+  const [selectedSub, setSelectedSub] = useState<string | null>(initialSub);
+
+  // Keep selected subtopic in sync with the URL (?sub=key)
+  useEffect(() => {
+    const sub = searchParams.get("sub");
+    if (sub !== selectedSub) {
+      setSelectedSub(sub);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   if (!topicData) {
     return <div className="text-center text-xl text-red-500">Topic Not Found</div>;
@@ -41,7 +53,14 @@ export default function TopicPage() {
                 {topicData.subtopics.map((sub: any) => (
                   <button
                     key={sub.key}
-                    onClick={() => setSelectedSub(sub.key)}
+                    onClick={() => {
+                      setSelectedSub(sub.key);
+                      setSearchParams((prev) => {
+                        const sp = new URLSearchParams(prev);
+                        sp.set("sub", sub.key);
+                        return sp;
+                      });
+                    }}
                     className={`px-4 py-2 rounded-lg border ${selectedSub === sub.key ? "bg-indigo-600 text-white" : "bg-white text-gray-700 hover:bg-gray-50"}`}
                   >
                     {sub.title}
@@ -93,6 +112,15 @@ export default function TopicPage() {
                       </div>
                     </div>
                   )}
+
+                  {/* PDF Viewer above code block when pdfUrl present */}
+                  {(subtopic as any).pdfUrl && (
+                    <div className="mb-6">
+                      <h4 className="font-bold mb-2">Reference PDF:</h4>
+                      <PdfViewer url={(subtopic as any).pdfUrl} title={`${subtopic.title} - PDF`} height={700} useGoogleViewer={true} />
+                    </div>
+                  )}
+
                   {subtopic.code && (
                     <div className="mb-4">
                       <h4 className="font-bold mb-2">Code Example:</h4>
