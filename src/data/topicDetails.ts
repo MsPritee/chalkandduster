@@ -82,20 +82,20 @@ const topicDetails = {
                 key: "practical-2",
                 title: "P2: Controlling LEDs",
                 description: "Control multiple LEDs using Raspberry Pi GPIO pins.",
-                pdfUrl: "https://drive.google.com/file/d/1eFCWgNZ61CONvCYLy2x3nxwM4LJDAOsF/view?usp=sharing",
+                pdfUrl: "https://drive.google.com/file/d/16h8s-ztFHstI7llI9z2kxuPLicMUnCj4/view?usp=drive_link",
                 table: [
 
 
                     ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
-                    ["1", "GPIO 2", "PIN 3", "D0"],
-                    ["2", "GPIO 3", "PIN 5", "D1"],
-                    ["3", "GPIO 4", "PIN 7", "D2"],
-                    ["4", "GPIO 17", "PIN 11", "D3"],
-                    ["5", "GPIO 27", "PIN 13", "D4"],
-                    ["6", "GPIO 22", "PIN 15", "D5"],
-                    ["7", "GPIO 10", "PIN 19", "D6"],
-                    ["8", "GPIO 9", "PIN 21", "D7"],
-                    ["9", "GND", "PIN 6", "GND"],
+                    ["1", "GPIO 2", "PIN 3", "D0 (1)"],
+                    ["2", "GPIO 3", "PIN 5", "D1 (2)"],
+                    ["3", "GPIO 4", "PIN 7", "D2 (3)"],
+                    ["4", "GPIO 17", "PIN 11", "D3 (4)"],
+                    ["5", "GPIO 27", "PIN 13", "D4 (5)"],
+                    ["6", "GPIO 22", "PIN 15", "D5 (6)"],
+                    ["7", "GPIO 10", "PIN 19", "D6 (7)"],
+                    ["8", "GPIO 9", "PIN 21", "D7 (8)"],
+                    ["9", "GND", "PIN 6", "GND (0)"],
 
 
                 ],
@@ -177,7 +177,7 @@ finally:
                     ["12", "GPIO 24", "PIN 18", "Digit 0 (Rightmost/0)"]
 
                 ],
-                pdfUrl: "https://drive.google.com/file/d/16h8s-ztFHstI7llI9z2kxuPLicMUnCj4/view?usp=drive_link",
+                pdfUrl: "https://drive.google.com/file/d/1eFCWgNZ61CONvCYLy2x3nxwM4LJDAOsF/view?usp=sharing",
                 code: `import RPi.GPIO as GPIO
 import time, datetime
 now = datetime.datetime.now()
@@ -294,7 +294,7 @@ while 1:
                     ["9", "GND", "PIN 6", "GND"],
 
                 ],
-                pdfUrl: "https://drive.google.com/file/d/1H0LY_4MB4dtgoF4ceBU803QYTZXz4hRY/view?usp=sharing",
+                pdfUrl: "https://drive.google.com/file/d/1GfS9x3_FkNnx2wP25zTi1D20-zHdyQiR/view?usp=sharing",
                 code: `
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
@@ -351,7 +351,7 @@ def whatsapp():
     return str(response)
 
 @app.route("/") 
-def home: 
+def home(): 
     return "Welcome to the LED control app." 
 
 if __name__ == "__main__":
