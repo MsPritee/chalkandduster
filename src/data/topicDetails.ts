@@ -1,6 +1,36 @@
-import { FunctionSquare as Functions, Calculator, PieChart } from "lucide-react";
+import { FunctionSquare as Functions, Calculator, PieChart, BellElectric } from "lucide-react";
 
 const topicDetails = {
+    "CSD": {
+        title: "Combinational and Sequential Design",
+        category: "Technology",
+        description: "Digital Electronics and Basic Components",
+        icon: BellElectric,
+        content: "",
+        subtopics: [
+            {
+                key: "practical-1",
+                title: "P1: Study of Basic logic Gates",
+                description: "",
+                pdfUrl: "https://drive.google.com/file/d/1BrBlrF1d6Js4LZy0WyF3oEYq7Afnxqh3/view?usp=sharing",
+                extra: "Instructions for practical 1."
+            },
+            {
+                key: "practical-2",
+                title: "P2: De Morgan's laws",
+                description: "",
+                pdfUrl: "https://drive.google.com/file/d/1G5NK4aiQ8cC-sNueTjnhquqmM6wUsP-L/view?usp=sharing",
+                extra: "Instructions for practical 2."
+            },
+            {
+                key: "practical-3",
+                title: "P3: De Morgan's laws",
+                description: "",
+                pdfUrl: "https://drive.google.com/file/d/1ZFMFM_NeeciLXTIn7oZ8dm9tnYCkHJ4b/view?usp=sharing",
+                extra: "Instructions for practical 3."
+            },
+        ]
+    },
     "linear-equations": {
         title: "Linear Equations",
         category: "Algebra",

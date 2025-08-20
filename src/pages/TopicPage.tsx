@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import topicDetails from "../data/topicDetails";
 import CodeBlock from "../components/CodeBlock";
@@ -30,15 +30,15 @@ export default function TopicPage() {
   if ('subtopics' in topicData && Array.isArray(topicData.subtopics)) {
     const subtopic = topicData.subtopics.find((s: any) => s.key === selectedSub);
     return (
-      <div className="py-16">
-        <div className="container-custom">
+      <div className="py-16 sm:px-0">
+        <div className="container-custom sm:px-2">
           <button
             className="mb-6 text-indigo-600 hover:underline"
             onClick={() => navigate("/notes")}
           >
             ← Back to Topics
           </button>
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          <div className="bg-white rounded-xl sm:p-2 shadow-lg p-2 md:p-8">
             <div className="flex items-center gap-4 mb-6">
               <div className="p-3 bg-indigo-50 rounded-lg">
                 <Icon className="h-8 w-8 text-indigo-600" />
@@ -68,7 +68,7 @@ export default function TopicPage() {
                 ))}
               </div>
               {subtopic && (
-                <div className="bg-gray-50 rounded-lg p-6">
+                <div className="bg-gray-50 rounded-lg p-2  md:p-6">
                   <h3 className="text-xl font-semibold mb-2">{subtopic.title}</h3>
                   <p className="mb-4 text-gray-700">{subtopic.description}</p>
                   {subtopic.table && (
@@ -117,7 +117,7 @@ export default function TopicPage() {
                   {(subtopic as any).pdfUrl && (
                     <div className="mb-6">
                       <h4 className="font-bold mb-2">Reference PDF:</h4>
-                      <PdfViewer url={(subtopic as any).pdfUrl} title={`${subtopic.title} - PDF`} height={700} useGoogleViewer={true} />
+                      <PdfViewer url={(subtopic as any).pdfUrl} title={`${subtopic.title}`} height={700} useGoogleViewer={true} />
                     </div>
                   )}
 

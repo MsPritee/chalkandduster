@@ -17,7 +17,7 @@ export default function CodeBlock({ code, language = "python" }: { code: string;
   };
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <button
         onClick={handleCopy}
         className="absolute top-2 right-2 px-2 py-1 text-xs bg-indigo-600 text-white rounded hover:bg-indigo-700 z-10"
@@ -30,3 +30,5 @@ export default function CodeBlock({ code, language = "python" }: { code: string;
     </div>
   );
 }
+
+
