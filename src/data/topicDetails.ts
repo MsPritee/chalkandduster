@@ -31,69 +31,6 @@ const topicDetails = {
             },
         ]
     },
-    "linear-equations": {
-        title: "Linear Equations",
-        category: "Algebra",
-        description: "Learn how to solve linear equations and apply them to real-world problems.",
-        icon: Functions,
-        content: "Linear equations are equations of the form Ax + B = 0..."
-    },
-    "quadratic-functions": {
-        title: "Quadratic Functions",
-        category: "Algebra",
-        description: "Understand quadratic equations, their graphs, and solutions.",
-        icon: Functions,
-        content: "A quadratic function is a function that can be described by an equation of the form ax^2 + bx + c = 0..."
-    },
-    "polynomials": {
-        title: "Polynomials",
-        category: "Algebra",
-        description: "Explore polynomial functions, their properties, and factorization techniques.",
-        icon: Calculator,
-        content: "A polynomial is a mathematical expression consisting of variables and coefficients..."
-    },
-    "limits": {
-        title: "Limits",
-        category: "Calculus",
-        description: "Grasp the concept of limits in calculus and their applications.",
-        icon: Functions,
-        content: "Limits describe the behavior of a function as it approaches a certain value..."
-    },
-    "derivatives": {
-        title: "Derivatives",
-        category: "Calculus",
-        description: "Master differentiation and its applications in calculus.",
-        icon: Calculator,
-        content: "The derivative measures how a function changes as its input changes..."
-    },
-    "integrals": {
-        title: "Integrals",
-        category: "Calculus",
-        description: "Learn about integrals and their significance in calculus.",
-        icon: Functions,
-        content: "An integral represents the area under a curve and is a key concept in calculus..."
-    },
-    "probability": {
-        title: "Probability",
-        category: "Statistics",
-        description: "Study probability theories and their real-world applications.",
-        icon: PieChart,
-        content: "Probability is the measure of the likelihood of an event occurring..."
-    },
-    "data-analysis": {
-        title: "Data Analysis",
-        category: "Statistics",
-        description: "Understand data analysis techniques and statistical methods.",
-        icon: PieChart,
-        content: "Data analysis involves inspecting, cleaning, transforming, and modeling data..."
-    },
-    "regression": {
-        title: "Regression",
-        category: "Statistics",
-        description: "Learn about regression models and their role in statistics.",
-        icon: Calculator,
-        content: "Regression analysis helps predict the relationship between variables..."
-    },
     "Internet-of-Things": {
         title: "Internet of Things",
         category: "Technology",
@@ -395,24 +332,166 @@ if __name__ == "__main__":
             {
                 key: "practical-5",
                 title: "P5:  Fingerprint Sensor interfacing with Raspberry Pi",
-                description: " Fingerprint Sensor interfacing with Raspberry Pi",
-                table: [
+                description: "Fingerprint-based IoT Door Lock (LED simulation) ",
+                // table: [
 
-                    ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
-                    ["1", "GPIO 2", "PIN 3", "D0"],
-                    ["2", "GPIO 3", "PIN 5", "D1"],
-                    ["3", "GPIO 4", "PIN 7", "D2"],
-                    ["4", "GPIO 17", "PIN 11", "D3"],
-                    ["5", "GPIO 27", "PIN 13", "D4"],
-                    ["6", "GPIO 22", "PIN 15", "D5"],
-                    ["7", "GPIO 10", "PIN 19", "D6"],
-                    ["8", "GPIO 9", "PIN 21", "D7"],
-                    ["9", "GND", "PIN 6", "GND"],
+                //     ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
+                //     ["1", "GPIO 2", "PIN 3", "D0"],
+                //     ["2", "GPIO 3", "PIN 5", "D1"],
+                //     ["3", "GPIO 4", "PIN 7", "D2"],
+                //     ["4", "GPIO 17", "PIN 11", "D3"],
+                //     ["5", "GPIO 27", "PIN 13", "D4"],
+                //     ["6", "GPIO 22", "PIN 15", "D5"],
+                //     ["7", "GPIO 10", "PIN 19", "D6"],
+                //     ["8", "GPIO 9", "PIN 21", "D7"],
+                //     ["9", "GND", "PIN 6", "GND"],
 
-                ],
+                // ],
                 pdfUrl: "",
-                code: ``,
+                code: `
+from pyfingerprint.pyfingerprint import PyFingerprint
+import RPi.GPIO as GPIO
+import time
+
+# Setup LED
+LED_PIN = 17
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(LED_PIN, GPIO.OUT)
+GPIO.output(LED_PIN, GPIO.LOW)
+
+try:
+    f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
+    if not f.verifyPassword():
+        raise ValueError('Fingerprint sensor password is wrong!')
+
+    print("Fingerprint sensor ready!")
+    print("Templates stored: " + str(f.getTemplateCount()))
+
+except Exception as e:
+    print("Error: " + str(e))
+    exit(1)
+
+try:
+    while True:
+        print("Place your finger...")
+        while not f.readImage():
+            pass
+
+        f.convertImage(0x01)
+        result = f.searchTemplate()
+        positionNumber = result[0]
+
+        if positionNumber == -1:
+            print("Access Denied")
+            GPIO.output(LED_PIN, GPIO.LOW)
+        else:
+            print("Access Granted (Template #" + str(positionNumber) + ")")
+            GPIO.output(LED_PIN, GPIO.HIGH)
+            time.sleep(5)
+            GPIO.output(LED_PIN, GPIO.LOW)
+
+except KeyboardInterrupt:
+    print("Exiting program...")
+    GPIO.cleanup()
+
+                `,
                 extra: "Author: Pritee"
+            },
+            {
+                key: "practical-21",
+                title: "Enroll Fingerprint",
+                description: "Enroll fingerprint using fingerprint sensor..",
+                code: `
+from pyfingerprint.pyfingerprint import PyFingerprint
+
+try:
+    f = PyFingerprint('/dev/serial0', 57600, 0xFFFFFFFF, 0x00000000)
+    if ( f.verifyPassword() == False ):
+        raise ValueError('The given fingerprint sensor password is wrong!')
+
+except Exception as e:
+    print('Failed to initialize fingerprint sensor!')
+    print('Exception message: ' + str(e))
+    exit(1)
+
+try:
+    print('Waiting for finger...')
+    while ( f.readImage() == False ):
+        pass
+
+    f.convertImage(0x01)
+
+    result = f.searchTemplate()
+    positionNumber = result[0]
+
+    if positionNumber >= 0:
+        print('Template already exists at position #' + str(positionNumber))
+        exit(0)
+
+    print('Remove finger...')
+    while ( f.readImage() == True ):
+        pass
+
+    print('Waiting for same finger again...')
+    while ( f.readImage() == False ):
+        pass
+
+    f.convertImage(0x02)
+
+    if ( f.compareCharacteristics() == 0 ):
+        raise Exception('Fingers do not match')
+
+    positionNumber = f.storeTemplate()
+    print('Finger enrolled successfully at position #' + str(positionNumber))
+
+except Exception as e:
+    print('Operation failed!')
+    print('Exception message: ' + str(e))
+    exit(1)
+    
+`,
+                extra: "Instructions for practical 5."
+            },
+            {
+                key: "practical-22",
+                title: "Search Fingerprint",
+                description: "Search fingerprint ",
+                code: `
+from pyfingerprint.pyfingerprint import PyFingerprint
+
+try:
+    f = PyFingerprint('/dev/serial0', 57600, 0xFFFFFFFF, 0x00000000)
+    if ( f.verifyPassword() == False ):
+        raise ValueError('The given fingerprint sensor password is wrong!')
+
+except Exception as e:
+    print('Failed to initialize fingerprint sensor!')
+    print('Exception message: ' + str(e))
+    exit(1)
+
+try:
+    print('Waiting for finger...')
+    while ( f.readImage() == False ):
+        pass
+
+    f.convertImage(0x01)
+
+    result = f.searchTemplate()
+    positionNumber = result[0]
+    accuracyScore = result[1]
+
+    if ( positionNumber == -1 ):
+        print('No match found!')
+    else:
+        print(f'Found match at position #{positionNumber} with accuracy score {accuracyScore}')
+
+except Exception as e:
+    print('Operation failed!')
+    print('Exception message: ' + str(e))
+    exit(1)
+
+                `,
+                extra: "Instructions for practical 5."
             },
             {
                 key: "practical-11",
@@ -687,6 +766,70 @@ if __name__ == "__main__":
 
         ]
     },
+    "linear-equations": {
+        title: "Linear Equations",
+        category: "Algebra",
+        description: "Learn how to solve linear equations and apply them to real-world problems.",
+        icon: Functions,
+        content: "Linear equations are equations of the form Ax + B = 0..."
+    },
+    "quadratic-functions": {
+        title: "Quadratic Functions",
+        category: "Algebra",
+        description: "Understand quadratic equations, their graphs, and solutions.",
+        icon: Functions,
+        content: "A quadratic function is a function that can be described by an equation of the form ax^2 + bx + c = 0..."
+    },
+    "polynomials": {
+        title: "Polynomials",
+        category: "Algebra",
+        description: "Explore polynomial functions, their properties, and factorization techniques.",
+        icon: Calculator,
+        content: "A polynomial is a mathematical expression consisting of variables and coefficients..."
+    },
+    "limits": {
+        title: "Limits",
+        category: "Calculus",
+        description: "Grasp the concept of limits in calculus and their applications.",
+        icon: Functions,
+        content: "Limits describe the behavior of a function as it approaches a certain value..."
+    },
+    "derivatives": {
+        title: "Derivatives",
+        category: "Calculus",
+        description: "Master differentiation and its applications in calculus.",
+        icon: Calculator,
+        content: "The derivative measures how a function changes as its input changes..."
+    },
+    "integrals": {
+        title: "Integrals",
+        category: "Calculus",
+        description: "Learn about integrals and their significance in calculus.",
+        icon: Functions,
+        content: "An integral represents the area under a curve and is a key concept in calculus..."
+    },
+    "probability": {
+        title: "Probability",
+        category: "Statistics",
+        description: "Study probability theories and their real-world applications.",
+        icon: PieChart,
+        content: "Probability is the measure of the likelihood of an event occurring..."
+    },
+    "data-analysis": {
+        title: "Data Analysis",
+        category: "Statistics",
+        description: "Understand data analysis techniques and statistical methods.",
+        icon: PieChart,
+        content: "Data analysis involves inspecting, cleaning, transforming, and modeling data..."
+    },
+    "regression": {
+        title: "Regression",
+        category: "Statistics",
+        description: "Learn about regression models and their role in statistics.",
+        icon: Calculator,
+        content: "Regression analysis helps predict the relationship between variables..."
+    },
+
     "Artificial-Intelligence": {
         title: "Artificial Intelligence",
         category: "Technology",

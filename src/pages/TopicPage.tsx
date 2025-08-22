@@ -71,14 +71,14 @@ export default function TopicPage() {
                 <div className="bg-gray-50 rounded-lg p-2  md:p-6">
                   <h3 className="text-xl font-semibold mb-2">{subtopic.title}</h3>
                   <p className="mb-4 text-gray-700">{subtopic.description}</p>
-                  {subtopic.table && (
+                  {(subtopic as any).table && (
                     <div className="mb-6">
                       <h4 className="font-bold mb-3 text-lg">Connection Details:</h4>
                       <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
                         <table className="min-w-full divide-y divide-gray-200">
                           <thead className="bg-gradient-to-r from-indigo-500 to-purple-600">
                             <tr>
-                              {subtopic.table[0].map((header: string, idx: number) => (
+                              {(subtopic as any).table?.[0]?.map((header: string, idx: number) => (
                                 <th key={idx} className={`px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider ${
                                   idx === 0 ? 'text-center w-16' : // S.No - narrow
                                   idx === 1 ? 'text-center w-32' : // GPIO - medium
@@ -92,9 +92,9 @@ export default function TopicPage() {
                             </tr>
                           </thead>
                           <tbody className="bg-white divide-y divide-gray-200">
-                            {subtopic.table.slice(1).map((row: string[], rowIdx: number) => (
+                            {(subtopic as any).table?.slice(1)?.map((row: string[], rowIdx: number) => (
                               <tr key={rowIdx} className="hover:bg-gray-50 transition-colors duration-150">
-                                {row.map((cell: string, cellIdx: number) => (
+                                {row?.map((cell: string, cellIdx: number) => (
                                   <td key={cellIdx} className={`px-6 py-4 text-sm text-gray-900 ${
                                     cellIdx === 0 ? 'text-center font-medium' : // S.No - centered and bold
                                     cellIdx === 1 ? 'text-center font-mono' : // GPIO - monospace
@@ -121,10 +121,10 @@ export default function TopicPage() {
                     </div>
                   )}
 
-                  {subtopic.code && (
+                  {(subtopic as any).code && (
                     <div className="mb-4">
-                      <h4 className="font-bold mb-2">Code Example:</h4>
-                      <CodeBlock code={subtopic.code} language="python" />
+                      <h4 className="font-bold mb-2">Code:</h4>
+                      <CodeBlock code={(subtopic as any).code} language="python" />
                     </div>
                   )}
                   {subtopic.extra && <div className="text-sm text-gray-500">{subtopic.extra}</div>}
