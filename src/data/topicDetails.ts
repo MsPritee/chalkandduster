@@ -347,7 +347,7 @@ if __name__ == "__main__":
                 //     ["9", "GND", "PIN 6", "GND"],
 
                 // ],
-                pdfUrl: "",
+                pdfUrl: "https://drive.google.com/file/d/12sTJr3crRoj3z3S_BjTk9Wr7iFg8YOBP/view?usp=sharing",
                 code: `
 from pyfingerprint.pyfingerprint import PyFingerprint
 import RPi.GPIO as GPIO

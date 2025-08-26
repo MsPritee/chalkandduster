@@ -156,6 +156,315 @@ const quizData =
               }
             ]
           },
+
+          {
+            "topic": "Combinational and Sequential Design",
+            "questions": [
+              [
+                {
+                  "questionText": "The output of an AND gate is 1 if:",
+                  "options": ["All inputs are 0", "At least one input is 1", "All inputs are 1", "Inputs are different"],
+                  "correctAnswerIndex": 2,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The output of an OR gate is 0 if:",
+                  "options": ["All inputs are 1", "All inputs are 0", "At least one input is 1", "Inputs are different"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The output of a NOT gate is:",
+                  "options": ["Same as input", "Double the input", "Inverse of input", "Always 1"],
+                  "correctAnswerIndex": 2,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which of these is the Boolean expression for a NOR gate?",
+                  "options": ["(A + B)’", "(AB)’", "(A ⊕ B)’", "A + B"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which gate outputs 1 only when inputs are different?",
+                  "options": ["AND", "OR", "XOR", "NOR"],
+                  "correctAnswerIndex": 2,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which gate outputs 1 only when inputs are the same?",
+                  "options": ["XOR", "XNOR", "NOR", "AND"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "If inputs A=1, B=0 in an AND gate, output is:",
+                  "options": ["0", "1", "A", "B"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The symbol '+' in Boolean algebra represents:",
+                  "options": ["NOT", "AND", "OR", "XOR"],
+                  "correctAnswerIndex": 2,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The symbol '·' in Boolean algebra represents:",
+                  "options": ["NOT", "AND", "OR", "XOR"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The gate that is the inverse of AND is:",
+                  "options": ["OR", "NOR", "NAND", "XOR"],
+                  "correctAnswerIndex": 2,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Idempotent Law states:",
+                  "options": ["A + A = A", "A · A = A", "Both a and b", "None"],
+                  "correctAnswerIndex": 2,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Null Law: A + 1 = ?",
+                  "options": ["0", "1", "A", "A’"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Null Law: A · 0 = ?",
+                  "options": ["A", "0", "1", "A’"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Involution Law states:",
+                  "options": ["(A’)' = A", "A + 0 = A", "A + 1 = 1", "A · 1 = A"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The Complement Law: A + A’ = ?",
+                  "options": ["0", "1", "A", "A’"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The Complement Law: A · A’ = ?",
+                  "options": ["0", "1", "A", "A’"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Distributive Law: A + (B · C) = ?",
+                  "options": ["(A + B)(A + C)", "A · B + C", "A + B + C", "(A · B)(A · C)"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Absorption Law: A + (A · B) = ?",
+                  "options": ["A", "B", "A · B", "A + B"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Absorption Law: A · (A + B) = ?",
+                  "options": ["A", "B", "A · B", "A + B"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The dual of A + 0 = A is:",
+                  "options": ["A · 1 = A", "A · 0 = 0", "A + 1 = 1", "A’ = A"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "How many rows will a truth table have for 2 variables?",
+                  "options": ["2", "3", "4", "8"],
+                  "correctAnswerIndex": 2,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "For 3 input variables, truth table has how many rows?",
+                  "options": ["4", "6", "8", "16"],
+                  "correctAnswerIndex": 2,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The simplified form of A + AB is:",
+                  "options": ["A", "B", "A + B", "AB"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The simplified form of A(A + B) is:",
+                  "options": ["A + B", "A", "AB", "0"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "A + A’B simplifies to:",
+                  "options": ["A + B", "B", "A", "1"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "(A + B)(A + C) simplifies to:",
+                  "options": ["A + BC", "AB + AC", "A + B + C", "A · B · C"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "AB + A’B simplifies to:",
+                  "options": ["A + B", "B", "A", "AB"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "AB + A’C simplifies to:",
+                  "options": ["(A + C)(B + C)", "(A + B)(A’ + C)", "A + BC", "B + C"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The expression A ⊕ B is equivalent to:",
+                  "options": ["AB + A’B’", "AB’ + A’B", "(A + B)’", "(AB)’"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Expression AB + A’B’ is equal to:",
+                  "options": ["A ⊕ B", "A ⊙ B (XNOR)", "A + B", "AB"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Universal gates are:",
+                  "options": ["AND, OR", "NAND, NOR", "XOR, XNOR", "NOT, OR"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which gate is called an “inverter”?",
+                  "options": ["AND", "NOT", "OR", "XOR"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which gate is equivalent to a bubbled OR gate?",
+                  "options": ["NOR", "NAND", "XOR", "AND"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which gate is equivalent to a bubbled AND gate?",
+                  "options": ["OR", "XOR", "NAND", "NOR"],
+                  "correctAnswerIndex": 2,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which law does the equation A + A = A represent?",
+                  "options": ["Identity", "Idempotent", "Absorption", "Involution"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which law does A + 1 = 1 represent?",
+                  "options": ["Null law", "Identity law", "Complement law", "Involution"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which law does (A + B)’ = A’B’ represent?",
+                  "options": ["De Morgan’s First Law", "De Morgan’s Second Law", "Distributive Law", "Identity Law"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which law does (AB)’ = A’ + B’ represent?",
+                  "options": ["De Morgan’s First Law", "De Morgan’s Second Law", "Absorption Law", "Null Law"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The algebra used to analyze digital circuits is:",
+                  "options": ["Boolean algebra", "Linear algebra", "Matrix algebra", "Ordinary algebra"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Boolean algebra was introduced by:",
+                  "options": ["Newton", "George Boole", "Leibniz", "De Morgan"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "A logic gate is a/an:",
+                  "options": ["Mechanical device", "Magnetic device", "Electronic circuit", "Optical device"],
+                  "correctAnswerIndex": 2,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which gate is used to detect even parity?",
+                  "options": ["XOR", "XNOR", "NAND", "NOR"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which gate is used to detect odd parity?",
+                  "options": ["XOR", "XNOR", "AND", "NOR"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Expression (A + B)’ is equal to:",
+                  "options": ["A’ + B’", "A’B’", "AB", "A + B"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Expression (AB)’ is equal to:",
+                  "options": ["A’ + B’", "A + B", "AB’", "A’B"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "A + AB + AB’ simplifies to:",
+                  "options": ["A", "B", "1", "A + B"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Expression (A + A’) simplifies to:",
+                  "options": ["0", "1", "A", "A’"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Expression (A · A’) simplifies to:",
+                  "options": ["0", "1", "A", "A’"],
+                  "correctAnswerIndex": 0,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "The complement of (A + B)(A + C) is:",
+                  "options": ["A’ + B’ + C’", "A’B’ + C’", "A’B’C’", "A’ + BC"],
+                  "correctAnswerIndex": 1,
+                  "difficulty": "Easy"
+                },
+                {
+                  "questionText": "Which of these is the correct truth table size for 4 input variables?",
+                  "options": ["8 rows", "12 rows", "16 rows", "20 rows"],
+                  "correctAnswerIndex": 2,
+                  "difficulty": "Easy"
+                }
+              ]
+              
+            ]
+          },
           {
             "topic": "Linear Algebra",
             "questions": [

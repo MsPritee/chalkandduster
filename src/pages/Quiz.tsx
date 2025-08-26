@@ -4,6 +4,7 @@ import { Search, Clock, CheckCircle, XCircle, User, Save } from 'lucide-react';
 import quizData from '../data/quizData';
 import { db } from "../firebase.ts";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import emailjs from '@emailjs/browser';
 
 interface Question {
   questionText: string;
@@ -43,6 +44,12 @@ const Quiz: React.FC = () => {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
+  // Email share state
+  const [emailTo, setEmailTo] = useState('');
+  const [emailSending, setEmailSending] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
+
   // All available topics
   const availableTopics = quizData.quizzes.map((quiz: Quiz) => quiz.topic);
 
@@ -76,10 +83,14 @@ const Quiz: React.FC = () => {
 
   // Step 1: User selects topic → prepare questions, then ask for name
   const startQuiz = (topic: string) => {
+    console.log('startQuiz called with topic:', topic);
     const quiz = quizData.quizzes.find((q: Quiz) => q.topic === topic);
+    console.log('Found quiz:', quiz);
     if (quiz) {
       const shuffledQuestions = [...quiz.questions].sort(() => Math.random() - 0.5);
       const selectedQuestions = shuffledQuestions.slice(0, 10);
+      console.log('Selected questions:', selectedQuestions.length);
+      console.log('First question sample:', selectedQuestions[0]);
 
       setCurrentQuestions(selectedQuestions);
       setSelectedAnswers(new Array(selectedQuestions.length).fill(-1));
@@ -104,6 +115,8 @@ const Quiz: React.FC = () => {
       return;
     }
     setNameError('');
+    console.log('handleConfirmName called, setting quizStarted to true');
+
     setAwaitingName(false);
     setQuizStarted(true);
     setTimeLeft(600);
@@ -174,6 +187,89 @@ const Quiz: React.FC = () => {
 
   const skipSave = () => {
     setSavePromptVisible(false);
+  };
+
+  // Build a detailed result payload for email
+  const buildEmailPayload = () => {
+    const total = currentQuestions.length;
+    const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
+    const timeSpentSeconds = Math.max(0, 600 - timeLeft);
+
+    const questions = currentQuestions.map((q, idx) => {
+      const selectedIndex = selectedAnswers[idx];
+      return {
+        number: idx + 1,
+        question: q.questionText,
+        selectedAnswer: selectedIndex >= 0 ? q.options[selectedIndex] : 'Not answered',
+        correctAnswer: q.options[q.correctAnswerIndex],
+        isCorrect: selectedIndex === q.correctAnswerIndex,
+      };
+    });
+
+    return {
+      name: userName || 'Anonymous',
+      topic: selectedTopic || '',
+      score,
+      total,
+      percentage,
+      timeSpentSeconds,
+      questions,
+    };
+  };
+
+  const handleSendEmail = async () => {
+    setEmailError(null);
+    setEmailSent(false);
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailTo)) {
+      setEmailError('Please enter a valid email address');
+      return;
+    }
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID as string;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string;
+
+    console.log('EmailJS config:', { serviceId, templateId, publicKey: publicKey ? '***' : 'missing' });
+
+    if (!serviceId || !templateId || !publicKey) {
+      setEmailError('Email service is not configured. Please set EmailJS environment variables.');
+      return;
+    }
+
+    const payload = buildEmailPayload();
+
+    const templateParams: Record<string, any> = {
+      to_email: emailTo,
+      user_name: payload.name,
+      topic: payload.topic,
+      score_line: `${payload.score}/${payload.total} (${payload.percentage}%)`,
+      time_spent: `${payload.timeSpentSeconds}s`,
+      // Provide both a readable text and JSON for flexibility in the template
+      questions_text: payload.questions
+        .map((q) => `Q${q.number}: ${q.question}\nSelected: ${q.selectedAnswer}\nCorrect: ${q.correctAnswer}\n`)
+        .join('\n'),
+      questions_json: JSON.stringify(payload.questions, null, 2),
+    };
+
+    try {
+      setEmailSending(true);
+      console.log('Sending email with params:', templateParams);
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      setEmailSent(true);
+    } catch (e: any) {
+      console.error('EmailJS error:', e);
+      if (e.status === 412) {
+        setEmailError('Email service configuration error. Please check EmailJS setup and domain permissions.');
+      } else if (e.status === 400) {
+        setEmailError('Invalid email parameters. Please check the email address.');
+      } else {
+        setEmailError(`Failed to send email: ${e.text || e.message || 'Unknown error'}`);
+      }
+    } finally {
+      setEmailSending(false);
+    }
   };
 
   const resetQuiz = () => {
@@ -355,6 +451,33 @@ const Quiz: React.FC = () => {
                 </div>
               </div>
 
+              {/* Share via Email */}
+              <div className="mb-8">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Share Results via Email</h3>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="email"
+                    placeholder="Recipient email"
+                    value={emailTo}
+                    onChange={(e) => setEmailTo(e.target.value)}
+                    className="flex-1 border border-gray-300 rounded-lg px-3 py-2 outline-none"
+                  />
+                  <button
+                    onClick={handleSendEmail}
+                    disabled={emailSending}
+                    className="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50"
+                  >
+                    {emailSending ? 'Sending...' : 'Send Results'}
+                  </button>
+                </div>
+                {emailError && (
+                  <p className="text-sm text-red-600 mt-2">{emailError}</p>
+                )}
+                {emailSent && (
+                  <p className="text-sm text-green-600 mt-2">Results sent successfully.</p>
+                )}
+              </div>
+
               {/* Review Answers */}
               <div className="space-y-6">
                 <h2 className="text-2xl font-semibold text-gray-900">Question Review</h2>
@@ -421,10 +544,41 @@ const Quiz: React.FC = () => {
     );
   }
 
-  // Active quiz
-  const currentQuestion = currentQuestions[currentQuestionIndex];
+  // Active quiz - show when quiz is started and questions are loaded
+  console.log('Quiz state check:', { 
+    quizStarted, 
+    questionsLength: currentQuestions.length, 
+    quizSubmitted, 
+    selectedTopic,
+    currentQuestionIndex 
+  });
+  
+  if (quizStarted && currentQuestions.length > 0 && !quizSubmitted) {
+    const currentQuestion = currentQuestions[currentQuestionIndex];
+    
+    console.log('Active quiz debug:', {
+      currentQuestions,
+      currentQuestionIndex,
+      currentQuestion,
+      questionText: currentQuestion?.questionText,
+      options: currentQuestion?.options
+    });
+    
+    // Safety check to ensure currentQuestion exists
+    if (!currentQuestion) {
+      return (
+        <div className="min-h-screen bg-gray-50 py-12">
+          <div className="container-custom">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-2xl font-bold text-gray-900 mb-4">Loading Question...</h1>
+              <p className="text-gray-600">Please wait while we load your question.</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
 
-  return (
+    return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container-custom">
         <div className="max-w-4xl mx-auto">
@@ -460,7 +614,7 @@ const Quiz: React.FC = () => {
             </h2>
 
             <div className="space-y-4">
-              {currentQuestion.options.map((option, index) => (
+              {currentQuestion.options && currentQuestion.options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => handleAnswerSelect(index)}
@@ -506,7 +660,7 @@ const Quiz: React.FC = () => {
 
           <div className="flex justify-center mt-8">
             <div className="flex space-x-2">
-              {currentQuestions.map((_, index) => (
+              {currentQuestions && currentQuestions.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentQuestionIndex(index)}
@@ -521,6 +675,25 @@ const Quiz: React.FC = () => {
               ))}
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    );
+  }
+
+  // Fallback - this shouldn't happen
+  return (
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="container-custom">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Something went wrong</h1>
+          <p className="text-gray-600 mb-4">Please try refreshing the page or selecting a topic again.</p>
+          <button
+            onClick={resetQuiz}
+            className="bg-indigo-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
+          >
+            Back to Quiz Center
+          </button>
         </div>
       </div>
     </div>
