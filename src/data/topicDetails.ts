@@ -397,6 +397,91 @@ except KeyboardInterrupt:
                 `,
                 extra: "Author: Pritee"
             },
+             {
+                key: "practical-6",
+                title: "P6: Web Controlled Home Automation",
+                description: "Control multiple LEDs using web app.",
+                table: [
+
+
+                    ["S.No", "Rsp Pi GPIO number", "Rsp Pi PIN number", "board name"],
+                    ["1", "GPIO 2", "PIN 3", "D0 (1)"],
+                    ["2", "GPIO 3", "PIN 5", "D1 (2)"],
+                    ["3", "GPIO 4", "PIN 7", "D2 (3)"],
+                    ["4", "GPIO 17", "PIN 11", "D3 (4)"],
+                    ["5", "GPIO 27", "PIN 13", "D4 (5)"],
+                    ["6", "GPIO 22", "PIN 15", "D5 (6)"],
+                    ["7", "GPIO 10", "PIN 19", "D6 (7)"],
+                    ["8", "GPIO 9", "PIN 21", "D7 (8)"],
+                    ["9", "GND", "PIN 6", "GND (0)"],
+
+
+                ],
+                pdfUrl: "",
+                code: `
+#Python Flask Code (app.py)
+#This will create a web server and let you turn ON/OFF each LED.  
+
+from flask import Flask, render_template
+import RPi.GPIO as GPIO
+
+app = Flask(__name__)
+
+# GPIO setup
+GPIO.setmode(GPIO.BCM)
+LED_PINS = {
+    "Light": 2,
+    "Fan": 3,
+    "TV": 4,
+    "Fridge": 17,
+    "AC": 27,
+    "Heater": 22,
+    "Lamp": 10,
+    "Speaker": 9
+}
+
+# Set all as output & OFF
+for pin in LED_PINS.values():
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, GPIO.LOW)
+
+@app.route("/")
+def index():
+    return render_template("index.html", devices=LED_PINS)
+
+@app.route("/<device>/<action>")
+def control(device, action):
+    pin = LED_PINS.get(device)
+    if pin:
+        GPIO.output(pin, GPIO.HIGH if action == "on" else GPIO.LOW)
+        return f"{device} turned {action}!"
+    return "Invalid device!"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
+
+
+#HTML Page (templates/index.html):
+
+<html>
+<head>
+  <title>Home Automation</title>
+</head>
+<body>
+  <h2>Web Controlled Home Automation</h2>
+  {% for name, pin in devices.items() %}
+    <p>{{name}}:
+      <a href="/{{name}}/on">ON</a>
+      <a href="/{{name}}/off">OFF</a>
+    </p>
+  {% endfor %}
+</body>
+</html>
+
+                `,
+                extra: "Author: Pritee"
+            },
             {
                 key: "practical-21",
                 title: "Enroll Fingerprint",
