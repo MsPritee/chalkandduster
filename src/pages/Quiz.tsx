@@ -5,6 +5,7 @@ import quizData from '../data/quizData';
 import { db } from "../firebase.ts";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import emailjs from '@emailjs/browser';
+import { generateQuizQuestions } from '../services/ai';
 
 interface Question {
   questionText: string;
@@ -41,6 +42,7 @@ const Quiz: React.FC = () => {
   const [score, setScore] = useState(0);
   const [savePromptVisible, setSavePromptVisible] = useState(false);
   const [saveDone, setSaveDone] = useState(false);
+  const [generatingQuestions, setGeneratingQuestions] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
@@ -82,18 +84,17 @@ const Quiz: React.FC = () => {
   };
 
   // Step 1: User selects topic → prepare questions, then ask for name
-  const startQuiz = (topic: string) => {
+  const startQuiz = async (topic: string) => {
     console.log('startQuiz called with topic:', topic);
-    const quiz = quizData.quizzes.find((q: Quiz) => q.topic === topic);
-    console.log('Found quiz:', quiz);
-    if (quiz) {
-      const shuffledQuestions = [...quiz.questions].sort(() => Math.random() - 0.5);
-      const selectedQuestions = shuffledQuestions.slice(0, 10);
-      console.log('Selected questions:', selectedQuestions.length);
-      console.log('First question sample:', selectedQuestions[0]);
+    setGeneratingQuestions(true);
 
-      setCurrentQuestions(selectedQuestions);
-      setSelectedAnswers(new Array(selectedQuestions.length).fill(-1));
+    try {
+      // Try to generate questions using AI
+      const generatedQuestions = await generateQuizQuestions(topic, 10);
+      console.log('Generated questions:', generatedQuestions.length);
+
+      setCurrentQuestions(generatedQuestions);
+      setSelectedAnswers(new Array(generatedQuestions.length).fill(-1));
       setSelectedTopic(topic);
 
       // Show name prompt; don't start quiz yet
@@ -105,6 +106,33 @@ const Quiz: React.FC = () => {
       setScore(0);
       setSaveDone(false);
       setSavePromptVisible(false);
+    } catch (error) {
+      console.error('Failed to generate questions with AI:', error);
+      // Fallback to static data
+      const quiz = quizData.quizzes.find((q: Quiz) => q.topic === topic);
+      console.log('Falling back to static quiz:', quiz);
+      if (quiz) {
+        const shuffledQuestions = [...quiz.questions].sort(() => Math.random() - 0.5);
+        const selectedQuestions = shuffledQuestions.slice(0, 10);
+        console.log('Selected questions:', selectedQuestions.length);
+        console.log('First question sample:', selectedQuestions[0]);
+
+        setCurrentQuestions(selectedQuestions);
+        setSelectedAnswers(new Array(selectedQuestions.length).fill(-1));
+        setSelectedTopic(topic);
+
+        // Show name prompt; don't start quiz yet
+        setAwaitingName(true);
+        setQuizStarted(false);
+        setTimeLeft(600);
+        setCurrentQuestionIndex(0);
+        setQuizSubmitted(false);
+        setScore(0);
+        setSaveDone(false);
+        setSavePromptVisible(false);
+      }
+    } finally {
+      setGeneratingQuestions(false);
     }
   };
 
@@ -316,11 +344,15 @@ const Quiz: React.FC = () => {
               {filteredTopics.map((topic) => (
                 <div
                   key={topic}
-                  className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer border border-gray-200"
-                  onClick={() => startQuiz(topic)}
+                  className={`bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow border border-gray-200 ${
+                    generatingQuestions ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+                  }`}
+                  onClick={() => !generatingQuestions && startQuiz(topic)}
                 >
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">{topic}</h3>
-                  <p className="text-gray-600 mb-4">Test your knowledge with 10 random questions</p>
+                  <p className="text-gray-600 mb-4">
+                    {generatingQuestions ? 'Generating questions...' : 'Test your knowledge with 10 AI-generated questions'}
+                  </p>
                   <div className="flex items-center text-sm text-gray-500">
                     <Clock className="h-4 w-4 mr-2" />
                     <span>10 minutes</span>
@@ -398,6 +430,7 @@ const Quiz: React.FC = () => {
 
   // Results screen
   if (quizSubmitted) {
+    const timeSpentSeconds = Math.max(0, 600 - timeLeft);
     return (
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="container-custom">
@@ -546,24 +579,24 @@ const Quiz: React.FC = () => {
   }
 
   // Active quiz - show when quiz is started and questions are loaded
-  console.log('Quiz state check:', { 
-    quizStarted, 
-    questionsLength: currentQuestions.length, 
-    quizSubmitted, 
-    selectedTopic,
-    currentQuestionIndex 
-  });
+  // console.log('Quiz state check:', { 
+  //   quizStarted, 
+  //   questionsLength: currentQuestions.length, 
+  //   quizSubmitted, 
+  //   selectedTopic,
+  //   currentQuestionIndex 
+  // });
   
   if (quizStarted && currentQuestions.length > 0 && !quizSubmitted) {
     const currentQuestion = currentQuestions[currentQuestionIndex];
     
-    console.log('Active quiz debug:', {
-      currentQuestions,
-      currentQuestionIndex,
-      currentQuestion,
-      questionText: currentQuestion?.questionText,
-      options: currentQuestion?.options
-    });
+    // console.log('Active quiz debug:', {
+    //   currentQuestions,
+    //   currentQuestionIndex,
+    //   currentQuestion,
+    //   questionText: currentQuestion?.questionText,
+    //   options: currentQuestion?.options
+    // });
     
     // Safety check to ensure currentQuestion exists
     if (!currentQuestion) {

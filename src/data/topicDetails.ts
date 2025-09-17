@@ -26,7 +26,7 @@ const topicDetails = {
                 key: "practical-3",
                 title: "P3: De Morgan's laws",
                 description: "",
-                pdfUrl: "https://drive.google.com/file/d/1ZFMFM_NeeciLXTIn7oZ8dm9tnYCkHJ4b/view?usp=sharing",
+                pdfUrl: "https://drive.google.com/file/d/1_JZLFkRo-ieaL2O0qfMy1Ll3d6OlKSwn/view?usp=drive_link",
                 extra: "Instructions for practical 3."
             },
         ]
@@ -417,7 +417,7 @@ except KeyboardInterrupt:
 
 
                 ],
-                pdfUrl: "",
+                pdfUrl: "https://drive.google.com/file/d/1PYMOg4eNwJH05X9jRcZkhyJxG6RaEcm5/view?usp=drive_link",
                 code: `
 #Python Flask Code (app.py)
 #This will create a web server and let you turn ON/OFF each LED.  
